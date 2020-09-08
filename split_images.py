@@ -9,7 +9,7 @@ import pandas as pd
 from PIL import Image, ImageFile
 from logzero import logger
 import pickle
-import argparse 
+import argparse
 
 
 REF_FILE = "AI_data20200812.xlsx"
@@ -18,7 +18,7 @@ SAMPLE_DIR_NAME = "HE_10x_exported_0.5x"
 Image.MAX_IMAGE_PIXELS = 10000000000
 
 
-def label_sample_generator(ref, stain='ER', threshold=90):
+def label_sample_generator(ref, stain="ER", threshold=90):
     for l, s in zip(
         sorted(os.listdir(LABEL_DIR_NAME)), sorted(os.listdir(SAMPLE_DIR_NAME))
     ):
@@ -71,15 +71,26 @@ def convert_PIL_to_array(img):
 
 def parse_args():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('-t', '--threshold', help='The threshold of immunostaining result (default: 90)', type=float, default=90) 
-    parser.add_argument('-s', '--stain', help='The type of immunostaining (default: ER)', type=str,
-                        choices=['ER', 'PgR', 'Ki-67'], default='ER') 
-    args = parser.parse_args()  
+    parser.add_argument(
+        "-t",
+        "--threshold",
+        help="The threshold of immunostaining result (default: 90)",
+        type=float,
+        default=90,
+    )
+    parser.add_argument(
+        "-s",
+        "--stain",
+        help="The type of immunostaining (default: ER)",
+        type=str,
+        choices=["ER", "PgR", "Ki-67"],
+        default="ER",
+    )
+    args = parser.parse_args()
     return args
 
 
-
-def main(stain='ER', threshold=90):
+def main(stain="ER", threshold=90):
     ImageFile.LOAD_TRUNCATED_IMAGES = True
     ref = pd.read_excel(REF_FILE)
     gen = label_sample_generator(ref, stain=stain, threshold=threshold)
