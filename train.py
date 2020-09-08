@@ -90,6 +90,7 @@ def preprocess(input_pkl):
 
 def plot_results(history, stain):
     # Accuracy
+    plt.figure()
     plt.plot(history.history["acc"])
     plt.plot(history.history["val_acc"])
     plt.title("model accuracy")
@@ -100,6 +101,7 @@ def plot_results(history, stain):
     plt.savefig(name, bbox_inches="tight")
 
     # loss
+    plt.figure()
     plt.plot(history.history["loss"])
     plt.plot(history.history["val_loss"])
     plt.title("model loss")
