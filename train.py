@@ -63,16 +63,13 @@ def preprocess(input_pkl):
     data_y.extend([0] * len(control))
     assert len(data_x) == len(data_y)
 
-    # np.arrayに変換
     data_x = np.array(data_x)
     data_y = np.array(data_y)
 
-    # 学習用データとテストデータに分割
     x_train, x_test, y_train, y_test = train_test_split(data_x, data_y, test_size=0.2)
     x_train = x_train.astype("float32")
     x_test = x_test.astype("float32")
 
-    # 正規化
     x_train = x_train / 255.0
     x_test = x_test / 255.0
 
