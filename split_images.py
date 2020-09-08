@@ -30,6 +30,8 @@ def label_sample_generator(ref, stain="ER", threshold=90):
                 continue
             elif percent > threshold:
                 group = 1
+            #             elif percent == 0:
+            #                 group = 0
             else:
                 group = 0
             yield l, s, group
@@ -81,16 +83,16 @@ def parse_args():
     parser.add_argument(
         "-s",
         "--stain",
-        help="The type of immunostaining (default: ER)",
+        help="The type of immunostaining (required)",
         type=str,
         choices=["ER", "PgR", "Ki-67"],
-        default="ER",
+        required=True,
     )
     args = parser.parse_args()
     return args
 
 
-def main(stain="ER", threshold=90):
+def main(stain, threshold):
     ImageFile.LOAD_TRUNCATED_IMAGES = True
     ref = pd.read_excel(REF_FILE)
     gen = label_sample_generator(ref, stain=stain, threshold=threshold)
@@ -115,7 +117,7 @@ def main(stain="ER", threshold=90):
             im_dict["case"][sample_name] = target_im_list
         else:
             im_dict["control"][sample_name] = target_im_list
-    with open(f"im_dict_{STAIN}.pickle", "wb") as wf:
+    with open(f"im_dict_{stain}_{threshold}.pickle", "wb") as wf:
         pickle.dump(im_dict, wf)
 
 
