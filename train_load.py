@@ -120,7 +120,7 @@ def main(stain, input_pkl):
     # Optimize model
     epochs = 3
     history = model.fit(
-        x_train, y_train, epochs=epochs, validation_split=0.2, callbacks=[checkpoint]
+        x_train, y_train, epochs=epochs, validation_split=0.2
     )
     score = model.evaluate(x_test, y_test, verbose=0)
 
